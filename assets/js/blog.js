@@ -91,7 +91,9 @@
     renderPager(ALL.length, page);
   };
 
-  fetch(POSTS_URL, { headers: { 'Accept': 'application/json' } })
+  // Cache-busting query to avoid CDN/Pages caching
+  const POSTS_URL_BUSTED = setParam(POSTS_URL, 't', String(Date.now()));
+  fetch(POSTS_URL_BUSTED, { headers: { 'Accept': 'application/json' } })
     .then(r => r.json())
     .then(json => {
       ALL = Array.isArray(json) ? json : [];
@@ -103,4 +105,3 @@
       pagerEl.innerHTML = '';
     });
 })();
-
