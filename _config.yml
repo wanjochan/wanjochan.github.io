@@ -62,14 +62,6 @@ theme_config:
 navigation:
   - title: "Home"
     url: "/"
-  - title: "Blog"
-    url: "/blog/"
-  - title: "Research"
-    url: "/research/"
-  - title: "Tools"
-    url: "/tools/"
-  - title: "About"
-    url: "/about/"
 
 # Social links
 social:
