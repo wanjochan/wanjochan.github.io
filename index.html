@@ -71,27 +71,11 @@ title: "WanjoChan"
   </div>
 </div>
 
-<div class="latest-posts-section" style='display:none'>
+<div class="latest-posts-section">
   <div class="container">
     <h2 class="section-title">Latest Research</h2>
-    <div class="posts-grid">
-      {% for post in site.posts limit:3 %}
-      <article class="post-card">
-        <div class="post-meta">
-          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
-          <span class="post-category">{{ post.category }}</span>
-        </div>
-        <h3 class="post-title">
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </h3>
-        <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
-        <a href="{{ post.url | relative_url }}" class="read-more">Read More →</a>
-      </article>
-      {% endfor %}
-    </div>
-    <div class="view-all">
-      <a href="/blog/" class="btn btn-outline">View All Posts</a>
-    </div>
+    <div id="posts-list" class="posts-grid"></div>
+    <div id="pagination" class="pagination"></div>
   </div>
 </div>
 
@@ -155,3 +139,9 @@ document.addEventListener('DOMContentLoaded', function() {
   drawChart();
 });
 </script>
+<script>
+  window.POSTS_JSON_URL = '{{ "/posts.json" | relative_url }}';
+  window.POSTS_PER_PAGE = 6; // adjust per preference
+  window.DEFAULT_CATEGORY_LABEL = 'Blog';
+</script>
+<script src="{{ '/assets/js/blog.js' | relative_url }}"></script>
