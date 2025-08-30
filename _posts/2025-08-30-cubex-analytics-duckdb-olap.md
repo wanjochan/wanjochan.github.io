@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "CubeX Analytics：基于 DuckDB 的多维 OLAP 引擎"
-date: 2025-08-30 12:30:00 +0000
+date: 2025-08-30 00:00:00 +0000
 tags: [OLAP, DuckDB, FastAPI, 数据分析, 多维分析]
 author: "WanJo Chan"
 excerpt: "CubeX 是一个面向 AI 代理的多维分析引擎，基于 DuckDB 与 FastAPI，内置维度/事实模型、查询与 OLAP 操作、缓存与性能监控，适合低成本搭建内嵌式分析服务。"
@@ -58,4 +58,3 @@ python -m aixcorp.core.cubex  # 或直接运行 cubex.py
 ```
 
 若用于内嵌型分析（Agent/服务侧），建议先调用 `init` 生成示例数据，再通过 `/query` 与 `/olap` 叠加你自身的业务维度与度量。
-
