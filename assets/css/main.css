@@ -344,6 +344,7 @@ pre code {
   padding: var(--spacing-lg);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-lg);
+  display: none; /* Hide the trading chart */
 }
 
 .market-stats {

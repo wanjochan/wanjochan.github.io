@@ -77,6 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const canvas = document.getElementById('heroChart');
   if (!canvas) return;
   
+  // Chart is hidden via CSS, so skip rendering to avoid unnecessary execution
+  return;
+  
   const ctx = canvas.getContext('2d');
   
   // Sample data for a trading chart

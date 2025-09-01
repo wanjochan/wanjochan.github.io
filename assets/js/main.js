@@ -105,7 +105,9 @@ function easeOutQuart(t) {
 function initCharts() {
     const heroChart = document.getElementById('heroChart');
     if (heroChart) {
-        drawHeroChart(heroChart);
+        // Chart is hidden via CSS, so skip rendering to avoid unnecessary execution
+        return;
+        // drawHeroChart(heroChart);
     }
 }
 
