@@ -1,13 +1,8 @@
 ---
 layout: default
-title: "WanjoChan"
 ---
 
-<div class="hero-section">
-  <div class="hero-content">
-    <div class="hero-text"></div>
-  </div>
-</div>
+
 
 <div class="features-section" style='display:none'>
   <div class="container">
@@ -57,4 +52,4 @@ title: "WanjoChan"
   window.POSTS_PER_PAGE = 6; // adjust per preference
   window.DEFAULT_CATEGORY_LABEL = 'Blog';
 </script>
-<script src="{{ '/assets/js/blog.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/blog.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
