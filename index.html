@@ -6,25 +6,6 @@ title: "WanjoChan"
 <div class="hero-section">
   <div class="hero-content">
     <div class="hero-text"></div>
-    <div class="hero-visual">
-      <div class="trading-chart">
-        <canvas id="heroChart" width="400" height="300"></canvas>
-      </div>
-      <div class="market-stats" style='display:none'>
-        <div class="stat-item">
-          <span class="stat-label">Portfolio Return</span>
-          <span class="stat-value positive">+24.7%</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-label">Sharpe Ratio</span>
-          <span class="stat-value">2.34</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-label">Max Drawdown</span>
-          <span class="stat-value negative">-8.2%</span>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -71,66 +52,6 @@ title: "WanjoChan"
   </div>
 </div>
 
-<script>
-// Hero chart animation
-document.addEventListener('DOMContentLoaded', function() {
-  const canvas = document.getElementById('heroChart');
-  if (!canvas) return;
-  
-  const ctx = canvas.getContext('2d');
-  
-  // Sample data for a trading chart
-  const data = [100, 102, 98, 105, 110, 108, 115, 120, 118, 125, 130, 128, 135];
-  const width = canvas.width;
-  const height = canvas.height;
-  const padding = 20;
-  
-  function drawChart() {
-    ctx.clearRect(0, 0, width, height);
-    
-    // Grid
-    ctx.strokeStyle = '#333';
-    ctx.lineWidth = 1;
-    for (let i = 0; i <= 10; i++) {
-      const y = padding + (height - 2 * padding) * i / 10;
-      ctx.beginPath();
-      ctx.moveTo(padding, y);
-      ctx.lineTo(width - padding, y);
-      ctx.stroke();
-    }
-    
-    // Chart line
-    ctx.strokeStyle = '#00ff88';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    
-    for (let i = 0; i < data.length; i++) {
-      const x = padding + (width - 2 * padding) * i / (data.length - 1);
-      const y = height - padding - (height - 2 * padding) * (data[i] - 90) / 50;
-      
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    }
-    ctx.stroke();
-    
-    // Data points
-    ctx.fillStyle = '#00ff88';
-    for (let i = 0; i < data.length; i++) {
-      const x = padding + (width - 2 * padding) * i / (data.length - 1);
-      const y = height - padding - (height - 2 * padding) * (data[i] - 90) / 50;
-      
-      ctx.beginPath();
-      ctx.arc(x, y, 3, 0, 2 * Math.PI);
-      ctx.fill();
-    }
-  }
-  
-  drawChart();
-});
-</script>
 <script>
   window.POSTS_JSON_URL = '{{ "/posts.json" | relative_url }}';
   window.POSTS_PER_PAGE = 6; // adjust per preference
