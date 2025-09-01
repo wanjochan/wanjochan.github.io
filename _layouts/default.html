@@ -57,59 +57,11 @@
             {{ content }}
         </main>
 
-        <!-- Footer -->
+        <!-- Footer (simplified) -->
         <footer class="footer">
             <div class="container">
-                <div class="footer-content">
-                    <div class="footer-section">
-                        <h3>{{ site.title }}</h3>
-                        <p>{{ site.description }}</p>
-                        <div class="social-links">
-                            {% if site.social.github %}
-                            <a href="https://github.com/{{ site.social.github }}" target="_blank" rel="noopener">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            {% endif %}
-                            {% if site.social.linkedin %}
-                            <a href="https://linkedin.com/in/{{ site.social.linkedin }}" target="_blank" rel="noopener">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            {% endif %}
-                            {% if site.social.twitter %}
-                            <a href="https://twitter.com/{{ site.social.twitter }}" target="_blank" rel="noopener">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            {% endif %}
-                            {% if site.social.email %}
-                            <a href="mailto:{{ site.social.email }}">
-                                <i class="fas fa-envelope"></i>
-                            </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                    
-                    <!-- Quick links removed per request -->
-                    
-                    <div class="footer-section">
-                        <h4>Research Areas</h4>
-                        <ul>
-                            <li>Quantitative Trading</li>
-                            <li>Machine Learning</li>
-                            <li>Risk Management</li>
-                            <li>DeFi & Blockchain</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h4>Contact</h4>
-                        <p>{{ site.author.email }}</p>
-                        <p>{{ site.author.bio }}</p>
-                    </div>
-                </div>
-                
                 <div class="footer-bottom">
-                    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author.name }}. All rights reserved.</p>
-                    <p>Built with Jekyll & GitHub Pages</p>
+                    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author.name }}</p>
                 </div>
             </div>
         </footer>

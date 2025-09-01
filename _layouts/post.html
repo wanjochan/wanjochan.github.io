@@ -69,27 +69,7 @@ layout: default
                 {% endif %}
             </div>
 
-            <div class="share-section">
-                <h4>Share this post:</h4>
-                <div class="share-buttons">
-                    <a href="https://twitter.com/intent/tweet?text={{ page.title | uri_escape }}&url={{ site.url }}{{ page.url }}" 
-                       target="_blank" class="share-btn twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url }}" 
-                       target="_blank" class="share-btn linkedin">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" 
-                       target="_blank" class="share-btn facebook">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="mailto:?subject={{ page.title | uri_escape }}&body={{ site.url }}{{ page.url }}" 
-                       class="share-btn email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                </div>
-            </div>
+            
         </div>
     </footer>
 </article>
@@ -245,37 +225,7 @@ layout: default
     color: var(--text-color);
 }
 
-.share-section {
-    text-align: center;
-}
-
-.share-buttons {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-md);
-}
-
-.share-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-  justify-content: center;
-    font-size: 1.2rem;
-    transition: var(--transition-normal);
-}
-
-.share-btn.twitter { background-color: #1da1f2; }
-.share-btn.linkedin { background-color: #0077b5; }
-.share-btn.facebook { background-color: #1877f2; }
-.share-btn.email { background-color: var(--accent-color); }
-
-.share-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
+/* share buttons removed */
 
 .related-posts {
     padding: var(--spacing-3xl) 0;
@@ -310,8 +260,6 @@ layout: default
         grid-template-columns: 1fr;
     }
     
-    .share-buttons {
-        flex-wrap: wrap;
-    }
+    /* share buttons removed */
 }
 </style>
