@@ -7,7 +7,7 @@ title: "WanjoChan"
   <div class="hero-content">
     <div class="hero-text"></div>
     <div class="hero-visual">
-      <div class="trading-chart">
+      <div class="trading-chart" style="display:none;">
         <canvas id="heroChart" width="400" height="300"></canvas>
       </div>
       <div class="market-stats" style='display:none'>
@@ -71,6 +71,7 @@ title: "WanjoChan"
   </div>
 </div>
 
+<!--
 <script>
 // Hero chart animation
 document.addEventListener('DOMContentLoaded', function() {
@@ -131,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
   drawChart();
 });
 </script>
+-->
 <script>
   window.POSTS_JSON_URL = '{{ "/posts.json" | relative_url }}';
   window.POSTS_PER_PAGE = 6; // adjust per preference

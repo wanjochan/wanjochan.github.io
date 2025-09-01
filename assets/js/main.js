@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
     initScrollEffects();
     initAnimations();
-    initCharts();
+    // initCharts(); // Commented out to disable chart functionality
 });
 
 // Navigation functionality
@@ -101,6 +101,7 @@ function easeOutQuart(t) {
     return 1 - (--t) * t * t * t;
 }
 
+/*
 // Initialize charts
 function initCharts() {
     const heroChart = document.getElementById('heroChart');
@@ -162,3 +163,4 @@ function drawHeroChart(canvas) {
     
     drawChart();
 }
+*/
