@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CubeX Analytics：基于 DuckDB 的多维 OLAP 引擎 | QuantTech Finance</title>
+    <meta name="description" content="CubeX 是一个面向 AI 代理的多维分析引擎，基于 DuckDB 与 FastAPI，内置维度/事实模型、查询与 OLAP 操作、缓存与性能监控，适合低成本搭建内嵌式分析服务。">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- SEO -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>CubeX Analytics：基于 DuckDB 的多维 OLAP 引擎 | QuantTech Finance</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="CubeX Analytics：基于 DuckDB 的多维 OLAP 引擎" />
+<meta name="author" content="WanJo Chan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="CubeX 是一个面向 AI 代理的多维分析引擎，基于 DuckDB 与 FastAPI，内置维度/事实模型、查询与 OLAP 操作、缓存与性能监控，适合低成本搭建内嵌式分析服务。" />
+<meta property="og:description" content="CubeX 是一个面向 AI 代理的多维分析引擎，基于 DuckDB 与 FastAPI，内置维度/事实模型、查询与 OLAP 操作、缓存与性能监控，适合低成本搭建内嵌式分析服务。" />
+<link rel="canonical" href="http://localhost:4000/posts/2025/08/30/cubex-analytics-duckdb-olap/" />
+<meta property="og:url" content="http://localhost:4000/posts/2025/08/30/cubex-analytics-duckdb-olap/" />
+<meta property="og:site_name" content="QuantTech Finance" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-08-30T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="CubeX Analytics：基于 DuckDB 的多维 OLAP 引擎" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"WanJo Chan"},"dateModified":"2025-08-30T00:00:00+00:00","datePublished":"2025-08-30T00:00:00+00:00","description":"CubeX 是一个面向 AI 代理的多维分析引擎，基于 DuckDB 与 FastAPI，内置维度/事实模型、查询与 OLAP 操作、缓存与性能监控，适合低成本搭建内嵌式分析服务。","headline":"CubeX Analytics：基于 DuckDB 的多维 OLAP 引擎","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/2025/08/30/cubex-analytics-duckdb-olap/"},"url":"http://localhost:4000/posts/2025/08/30/cubex-analytics-duckdb-olap/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="/" class="brand-link">
+                        <span class="brand-icon">⚡</span>
+                        <span class="brand-text">QuantTech Finance</span>
+                    </a>
+                </div>
+                
+                <div class="nav-menu" id="navMenu">
+                    
+                    <a href="/" class="nav-link ">
+                        Home
+                    </a>
+                    
+                </div>
+                
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <article class="post">
+    <header class="post-header">
+        <div class="container">
+            <div class="post-meta">
+                <time datetime="2025-08-30T00:00:00+00:00">August 30, 2025</time>
+                
+                
+                <div class="post-tags">
+                    
+                    <span class="tag">OLAP</span>
+                    
+                    <span class="tag">DuckDB</span>
+                    
+                    <span class="tag">FastAPI</span>
+                    
+                    <span class="tag">数据分析</span>
+                    
+                    <span class="tag">多维分析</span>
+                    
+                </div>
+                
+            </div>
+            <h1 class="post-title">CubeX Analytics：基于 DuckDB 的多维 OLAP 引擎</h1>
+            
+            
+            <div class="post-author">
+                <span>By WanJo Chan</span>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="post-content">
+        <div class="container">
+            <p>本文基于项目文件 <code class="language-plaintext highlighter-rouge">aixcorp/core/cubex.py</code>，简述 CubeX Analytics 的设计与用法。它以 DuckDB 为内核，结合 FastAPI 暴露 <code class="language-plaintext highlighter-rouge">/query</code>、<code class="language-plaintext highlighter-rouge">/olap</code> 等接口，内置维度模型与缓存机制，适合在 AI 工作流中嵌入轻量分析能力。</p>
+
+<h2 id="架构与数据模型">架构与数据模型</h2>
+<ul>
+  <li>核心类：<code class="language-plaintext highlighter-rouge">CubeXAnalytics</code>（命令式 OLAP 引擎）与 <code class="language-plaintext highlighter-rouge">QuantumDBService</code>（HTTP 服务层）。</li>
+  <li>存储：DuckDB 文件（<code class="language-plaintext highlighter-rouge">data/cubex/cubex.duckdb</code> 与 <code class="language-plaintext highlighter-rouge">data/default.duckdb</code>）。</li>
+  <li>维度表：<code class="language-plaintext highlighter-rouge">dim_time</code>、<code class="language-plaintext highlighter-rouge">dim_agent</code>、<code class="language-plaintext highlighter-rouge">dim_task</code>；事实表：<code class="language-plaintext highlighter-rouge">fact_agent_performance</code>。</li>
+  <li>特性：LRU/TTL 缓存（查询/OLAP/模式/统计）、并发限制、性能指标记录与健康检查。</li>
+</ul>
+
+<h2 id="能力速览">能力速览</h2>
+<ul>
+  <li>表与模式：<code class="language-plaintext highlighter-rouge">tables</code>、<code class="language-plaintext highlighter-rouge">schema &lt;table&gt;</code>；初始化：<code class="language-plaintext highlighter-rouge">init</code>（创建示例维度与事实数据）。</li>
+  <li>OLAP 操作：<code class="language-plaintext highlighter-rouge">slice</code>、<code class="language-plaintext highlighter-rouge">dice</code>、<code class="language-plaintext highlighter-rouge">rollup</code>、<code class="language-plaintext highlighter-rouge">drilldown</code>；支持按维度聚合与层级下钻。</li>
+  <li>API 端点：
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">POST /query</code> 执行 SQL；</li>
+      <li><code class="language-plaintext highlighter-rouge">POST /olap</code> 执行切片/汇总/下钻；</li>
+      <li><code class="language-plaintext highlighter-rouge">GET /databases</code>、<code class="language-plaintext highlighter-rouge">/health</code>、<code class="language-plaintext highlighter-rouge">/sample-queries</code>；<code class="language-plaintext highlighter-rouge">DELETE /cache</code> 清理缓存。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="示例">示例</h2>
+<p>执行 SQL（限制返回行、可缓存）：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST http://localhost:9771/query <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "sql": "SELECT agent_type, AVG(execution_time_ms) avg_time FROM fact_agent_performance fp JOIN dim_agent da ON fp.agent_key = da.agent_key GROUP BY agent_type ORDER BY avg_time",
+    "limit": 20,
+    "cache": true
+  }'</span>
+</code></pre></div></div>
+
+<p>OLAP 汇总（按维度 rollup）：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST http://localhost:9771/olap <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "operation": "rollup",
+    "cube": "fact_agent_performance",
+    "dimensions": ["agent_type", "task_category"],
+    "measures": ["execution_time_ms", "tokens_processed"]
+  }'</span>
+</code></pre></div></div>
+
+<h2 id="启动与配置">启动与配置</h2>
+<ul>
+  <li>环境变量：<code class="language-plaintext highlighter-rouge">PORT</code>（默认 9771）、<code class="language-plaintext highlighter-rouge">CUBEX_DATA_DIR</code>、<code class="language-plaintext highlighter-rouge">CUBEX_CACHE_DIR</code>、<code class="language-plaintext highlighter-rouge">DUCKDB_MEMORY_LIMIT</code>、<code class="language-plaintext highlighter-rouge">MAX_CONCURRENT_QUERIES</code>。</li>
+  <li>启动服务：</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> aixcorp.core.cubex  <span class="c"># 或直接运行 cubex.py</span>
+</code></pre></div></div>
+
+<p>若用于内嵌型分析（Agent/服务侧），建议先调用 <code class="language-plaintext highlighter-rouge">init</code> 生成示例数据，再通过 <code class="language-plaintext highlighter-rouge">/query</code> 与 <code class="language-plaintext highlighter-rouge">/olap</code> 叠加你自身的业务维度与度量。</p>
+
+        </div>
+    </div>
+
+    <footer class="post-footer">
+        <div class="container">
+            
+            <div class="post-tags-section">
+                <h4>Tags:</h4>
+                <div class="tags-list">
+                    
+                    <a href="/tags/olap/" class="tag-link">OLAP</a>
+                    
+                    <a href="/tags/duckdb/" class="tag-link">DuckDB</a>
+                    
+                    <a href="/tags/fastapi/" class="tag-link">FastAPI</a>
+                    
+                    <a href="/tags/数据分析/" class="tag-link">数据分析</a>
+                    
+                    <a href="/tags/多维分析/" class="tag-link">多维分析</a>
+                    
+                </div>
+            </div>
+            
+
+            <div class="post-navigation">
+                
+                
+                
+            </div>
+
+            <div class="share-section">
+                <h4>Share this post:</h4>
+                <div class="share-buttons">
+                    <a href="https://twitter.com/intent/tweet?text=CubeX%20Analytics%EF%BC%9A%E5%9F%BA%E4%BA%8E%20DuckDB%20%E7%9A%84%E5%A4%9A%E7%BB%B4%20OLAP%20%E5%BC%95%E6%93%8E&url=http://localhost:4000/posts/2025/08/30/cubex-analytics-duckdb-olap/" 
+                       target="_blank" class="share-btn twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=http://localhost:4000/posts/2025/08/30/cubex-analytics-duckdb-olap/" 
+                       target="_blank" class="share-btn linkedin">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/posts/2025/08/30/cubex-analytics-duckdb-olap/" 
+                       target="_blank" class="share-btn facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="mailto:?subject=CubeX%20Analytics%EF%BC%9A%E5%9F%BA%E4%BA%8E%20DuckDB%20%E7%9A%84%E5%A4%9A%E7%BB%B4%20OLAP%20%E5%BC%95%E6%93%8E&body=http://localhost:4000/posts/2025/08/30/cubex-analytics-duckdb-olap/" 
+                       class="share-btn email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</article>
+
+<section class="related-posts">
+    <div class="container">
+        <h3>Related Posts</h3>
+        <div class="related-posts-grid">
+            
+            
+        </div>
+    </div>
+</section>
+
+<style>
+/* Post-specific styles */
+.post-header {
+    background: linear-gradient(135deg, var(--background-color) 0%, #1a1a2e 100%);
+    padding: 120px 0 60px;
+    text-align: center;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.post-title {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-color);
+}
+
+.post-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.post-content {
+    padding: var(--spacing-3xl) 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post-content h1, .post-content h2, .post-content h3 {
+    color: var(--text-color);
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-lg);
+}
+
+.post-content h1 {
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: var(--spacing-sm);
+}
+
+.post-content h2 {
+    border-left: 4px solid var(--primary-color);
+    padding-left: var(--spacing-md);
+}
+
+.post-content pre {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    overflow-x: auto;
+}
+
+.post-content blockquote {
+    border-left: 4px solid var(--accent-color);
+    padding-left: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.post-footer {
+    background-color: var(--surface-color);
+    padding: var(--spacing-2xl) 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.post-tags-section {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.tags-list {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.tag-link {
+    background-color: var(--card-color);
+    color: var(--primary-color);
+    padding: 0.3em 0.8em;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+}
+
+.tag-link:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+.post-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.nav-link {
+    display: block;
+    padding: var(--spacing-lg);
+    background-color: var(--card-color);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-normal);
+}
+
+.nav-link:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.nav-direction {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.nav-title {
+    display: block;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.share-section {
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.share-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+  justify-content: center;
+    font-size: 1.2rem;
+    transition: var(--transition-normal);
+}
+
+.share-btn.twitter { background-color: #1da1f2; }
+.share-btn.linkedin { background-color: #0077b5; }
+.share-btn.facebook { background-color: #1877f2; }
+.share-btn.email { background-color: var(--accent-color); }
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.related-posts {
+    padding: var(--spacing-3xl) 0;
+}
+
+.related-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.related-post-card {
+    background-color: var(--card-color);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-normal);
+}
+
+.related-post-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+    .post-title {
+        font-size: 2rem;
+    }
+    
+    .post-navigation {
+        grid-template-columns: 1fr;
+    }
+    
+    .share-buttons {
+        flex-wrap: wrap;
+    }
+}
+</style>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>QuantTech Finance</h3>
+                        <p>Exploring the intersection of artificial intelligence, quantitative finance, and cutting-edge technology</p>
+                        <div class="social-links">
+                            
+                            <a href="https://github.com/wanjochan" target="_blank" rel="noopener">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            
+                            
+                            <a href="https://linkedin.com/in/wanjochan" target="_blank" rel="noopener">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            
+                            
+                            <a href="https://twitter.com/wanjochan" target="_blank" rel="noopener">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            
+                            
+                            <a href="mailto:wanjochan@asu.edu">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Quick links removed per request -->
+                    
+                    <div class="footer-section">
+                        <h4>Research Areas</h4>
+                        <ul>
+                            <li>Quantitative Trading</li>
+                            <li>Machine Learning</li>
+                            <li>Risk Management</li>
+                            <li>DeFi & Blockchain</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact</h4>
+                        <p>wanjochan@asu.edu</p>
+                        <p>Quantitative Finance Researcher & AI Engineer</p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2025 WanJo Chan. All rights reserved.</p>
+                    <p>Built with Jekyll & GitHub Pages</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/main.js"></script>
+    
+    <!-- Analytics -->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+</body>
+</html>
