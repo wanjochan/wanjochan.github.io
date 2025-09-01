@@ -22,11 +22,11 @@
   /* Spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 4rem;
+  --spacing-md: 0.9rem;
+  --spacing-lg: 1.25rem;
+  --spacing-xl: 1.6rem;
+  --spacing-2xl: 2.25rem;
+  --spacing-3xl: 3rem;
   
   /* Border radius */
   --radius-sm: 4px;
@@ -135,6 +135,7 @@ pre code {
 
 .main-content {
   flex: 1;
+  padding-top: 70px;
 }
 
 /* ===== Navigation ===== */
@@ -211,7 +212,7 @@ pre code {
 
 /* ===== Hero Section ===== */
 .hero-section {
-  padding: 120px 0 80px;
+  padding: 80px 0 48px;
   background: linear-gradient(135deg, var(--background-color) 0%, #1a1a2e 100%);
   position: relative;
   overflow: hidden;
@@ -231,12 +232,12 @@ pre code {
 }
 
 .hero-content {
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--spacing-md);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-3xl);
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
   align-items: center;
   position: relative;
   z-index: 1;
@@ -448,20 +449,20 @@ pre code {
 
 /* ===== Latest Posts Section ===== */
 .latest-posts-section {
-  padding: var(--spacing-3xl) 0;
+  padding: var(--spacing-2xl) 0;
 }
 
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--spacing-xl);
-  margin-bottom: var(--spacing-2xl);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
 }
 
 .post-card {
   background-color: var(--card-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
   border: 1px solid var(--border-color);
   transition: var(--transition-normal);
 }
@@ -518,7 +519,7 @@ pre code {
 .footer {
   background-color: var(--surface-color);
   border-top: 1px solid var(--border-color);
-  padding: var(--spacing-3xl) 0 var(--spacing-xl);
+  padding: var(--spacing-2xl) 0 var(--spacing-lg);
   margin-top: auto;
 }
 
@@ -661,6 +662,48 @@ pre code {
   }
 
   .footer { padding: var(--spacing-xl) 0; }
+
+  /* Compress spacing and typography for mobile */
+  :root {
+    --spacing-md: 0.7rem;
+    --spacing-lg: 0.9rem;
+    --spacing-xl: 1.1rem;
+    --spacing-2xl: 1.4rem;
+    --spacing-3xl: 1.8rem;
+  }
+  .container {
+    padding: 0 var(--spacing-md);
+  }
+  .nav-container {
+    height: 56px;
+    padding: 0 var(--spacing-md);
+  }
+  .hero-section {
+    padding: 64px 0 32px;
+  }
+  .section-title {
+    margin-bottom: var(--spacing-xl);
+    font-size: 1.75rem;
+  }
+  .posts-grid {
+    gap: var(--spacing-md);
+  }
+  .post-card {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+  }
+  .post-title a {
+    font-size: 1.15rem;
+  }
+  .post-excerpt {
+    margin-bottom: var(--spacing-md);
+  }
+  .footer-content {
+    gap: var(--spacing-lg);
+  }
+  .social-links {
+    margin-top: var(--spacing-md);
+  }
 }
 
 /* ===== Animations ===== */

@@ -1,11 +1,9 @@
 // Main JavaScript for QuantTech Finance Blog
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all components
     initNavigation();
     initScrollEffects();
     initAnimations();
-    initCharts();
 });
 
 // Navigation functionality
@@ -101,64 +99,4 @@ function easeOutQuart(t) {
     return 1 - (--t) * t * t * t;
 }
 
-// Initialize charts
-function initCharts() {
-    const heroChart = document.getElementById('heroChart');
-    if (heroChart) {
-        drawHeroChart(heroChart);
-    }
-}
-
-// Draw hero chart with canvas
-function drawHeroChart(canvas) {
-    const ctx = canvas.getContext('2d');
-    const data = [100, 102, 98, 105, 110, 108, 115, 120, 118, 125, 130, 128, 135];
-    const width = canvas.width;
-    const height = canvas.height;
-    const padding = 20;
-    
-    function drawChart() {
-        ctx.clearRect(0, 0, width, height);
-        
-        // Grid
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 1;
-        for (let i = 0; i <= 10; i++) {
-            const y = padding + (height - 2 * padding) * i / 10;
-            ctx.beginPath();
-            ctx.moveTo(padding, y);
-            ctx.lineTo(width - padding, y);
-            ctx.stroke();
-        }
-        
-        // Chart line
-        ctx.strokeStyle = '#00ff88';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        
-        for (let i = 0; i < data.length; i++) {
-            const x = padding + (width - 2 * padding) * i / (data.length - 1);
-            const y = height - padding - (height - 2 * padding) * (data[i] - 90) / 50;
-            
-            if (i === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
-        }
-        ctx.stroke();
-        
-        // Data points
-        ctx.fillStyle = '#00ff88';
-        for (let i = 0; i < data.length; i++) {
-            const x = padding + (width - 2 * padding) * i / (data.length - 1);
-            const y = height - padding - (height - 2 * padding) * (data[i] - 90) / 50;
-            
-            ctx.beginPath();
-            ctx.arc(x, y, 3, 0, 2 * Math.PI);
-            ctx.fill();
-        }
-    }
-    
-    drawChart();
-}
+// Charts removed for blog-focused mobile design
