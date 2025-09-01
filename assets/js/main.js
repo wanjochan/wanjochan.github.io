@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
     initScrollEffects();
     initAnimations();
-    initCharts();
+    // initCharts(); // Disabled - chart is hidden
 });
 
 // Navigation functionality
