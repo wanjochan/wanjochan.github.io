@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Cosmorun：让C语言像脚本一样运行的高性能解释器"
-date: 2025-01-27 00:00:00 +0000
+date: 2024-09-28 00:00:00 +0000
 tags: [C语言, 解释器, 高性能计算, 量化分析, 跨平台]
 author: "WanJo Chan"
 excerpt: "Cosmorun是一个基于C语言的解释执行器，结合Cosmocc和TinyCC技术，让C代码能够像脚本语言一样直接运行，特别适合量化分析、算法研究和快速原型开发。"
