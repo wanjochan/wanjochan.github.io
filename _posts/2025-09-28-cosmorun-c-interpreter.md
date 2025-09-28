@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Cosmorun：让C语言像脚本一样运行的高性能解释器"
-date: 2024-09-28 00:00:00 +0000
+date: 2025-09-28 00:00:00 +0000
 tags: [C语言, 解释器, 高性能计算, 量化分析, 跨平台]
-author: "WanJo Chan"
+author: "Wanjo Chan"
 excerpt: "Cosmorun是一个基于C语言的解释执行器，结合Cosmocc和TinyCC技术，让C代码能够像脚本语言一样直接运行，特别适合量化分析、算法研究和快速原型开发。"
 ---
 
@@ -56,11 +56,33 @@ int main() {
 
 直接运行：`cosmorun.exe example.c`
 
+**独特的优越点**：更令人惊喜的是，cosmorun内置了基础libc符号，即使不包含头文件也能直接使用常用的C标准库函数。这意味着您可以编写更加简洁的代码：
+
+```c
+// 无需任何include语句的简化版本
+int main() {
+    double result = 0;
+    for(int i = 1; i <= 1000000; i++) {
+        result += sqrt(i);  // sqrt函数可直接使用
+    }
+    printf("结果: %.2f\n", result);  // printf函数也可直接使用
+    return 0;
+}
+```
+
+这种设计大大简化了代码结构，让C语言的使用体验更加接近脚本语言，同时保持了高性能的特性。
+
 ### 3. 高性能计算
 相比传统脚本语言，cosmorun提供了接近原生C代码的执行性能，特别适合：
 - 数值计算密集型任务
 - 大数据处理
 - 算法性能测试
+
+### 4. 内置libc符号支持
+这是cosmorun的一个独特优势：
+- **无需include头文件**：内置了基础的libc符号，可以直接使用`printf`、`sqrt`、`malloc`等常用函数
+- **代码更简洁**：减少了繁琐的include语句，让代码更加清爽
+- **开发效率更高**：特别适合快速原型开发和算法验证
 
 ## 应用场景深度解析
 
@@ -68,10 +90,7 @@ int main() {
 在金融量化分析领域，cosmorun具有显著优势：
 
 ```c
-// 快速回测策略示例
-#include <stdio.h>
-#include <math.h>
-
+// 快速回测策略示例 - cosmorun简化版本（无需include）
 double calculate_sharpe_ratio(double* returns, int n) {
     double sum = 0, sum_sq = 0;
     for(int i = 0; i < n; i++) {
@@ -80,14 +99,14 @@ double calculate_sharpe_ratio(double* returns, int n) {
     }
     double mean = sum / n;
     double variance = (sum_sq / n) - (mean * mean);
-    return mean / sqrt(variance);
+    return mean / sqrt(variance);  // sqrt函数直接可用
 }
 
 int main() {
     double returns[] = {0.02, -0.01, 0.03, 0.015, -0.005};
     int n = sizeof(returns) / sizeof(returns[0]);
     
-    printf("夏普比率: %.4f\n", calculate_sharpe_ratio(returns, n));
+    printf("夏普比率: %.4f\n", calculate_sharpe_ratio(returns, n));  // printf函数直接可用
     return 0;
 }
 ```
@@ -95,14 +114,12 @@ int main() {
 **优势**：
 - 快速迭代测试不同的策略参数
 - 高性能的数值计算能力
+- 无需include头文件，代码更简洁
 - 便于集成到现有的数据分析流程
 
 ### 算法研究与教学
 ```c
-// 快速排序算法演示
-#include <stdio.h>
-#include <stdlib.h>
-
+// 快速排序算法演示 - cosmorun简化版本（无需include）
 void quicksort(int arr[], int low, int high) {
     if (low < high) {
         int pivot = partition(arr, low, high);
