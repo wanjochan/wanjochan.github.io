@@ -18,6 +18,11 @@ author:
 # Build settings
 markdown: kramdown
 highlighter: rouge
+kramdown:
+  math_engine: mathjax
+  math_engine_opts:
+    preview: true
+    preview_as_code: true
 permalink: /:year/:month/:day/:title/
 paginate: 10
 paginate_path: "/page:num/"
